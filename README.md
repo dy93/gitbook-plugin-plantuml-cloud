@@ -36,6 +36,7 @@ Added new parameters: language and host's port
 | umlPath | Path to a directory where the generated images for the diagrams will be cached. | "assets/images/uml" |
 | type | Determines the type of the server side API | "plantuml-service" |
 | host | Host for the diagramming service | "plantuml-service.herokuapp.com" |
+| port | Host's port | "80" |
 | protocol | https or http | "https" |
 | path | URL Fragment which will be appended to the host part | "/svg/" |
 | blockRegex | Regular expression to select the diagramming text blocks. | ^```uml((.*\n)+?)?```$ |
@@ -51,7 +52,9 @@ Added new parameters: language and host's port
       "protocol": "http",
       "type": "plantuml-server",
       "host": "www.plantuml.com",
-      "path": "/plantuml/svg/"
+      "port": "8080",
+      "path": "/plantuml/svg/",
+      "language": "asciidoc"
     }
   }
 }
