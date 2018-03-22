@@ -58,9 +58,9 @@ module.exports = {
 			if (config.language != undefined) {
 				options.language = config.languague;
 			}
-			console.log("options.umlPath ", options.umlPath);
+			process.stdout.write("options.umlPath " + options.umlPath);
 			var umlPath = output.resolve(options.umlPath);
-			console.log('umlPath after ', umlPath);
+			process.stdout.write("umlPath after " + umlPath);
 			mkdir('-p', umlPath);
 		},
 		"page:before": function (page) {
