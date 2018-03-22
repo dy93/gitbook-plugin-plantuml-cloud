@@ -1,21 +1,21 @@
 {
-  "name": "gitbook-plugin-plantuml-cloud",
-  "description": "Sample plugin for GitBook",
+  "name": "gitbook-plantuml-cloud-languages",
+  "description": "GitBook-PlantUML integration with support for Asciidoc",
   "main": "index.js",
   "version": "1.0.0",
   "engines": {
     "gitbook": "*"
   },
-  "homepage": "https://github.com/dy93/gitbook-plugin-plantuml-cloud",
+  "homepage": "https://github.com/rodgalvao/gitbook-plugin-plantuml-cloud",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dy93/gitbook-plugin-plantuml-cloud.git"
+    "url": "git+https://github.com/rodgalvao/gitbook-plugin-plantuml-cloud.git"
   },
   "license": "Apache-2.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "dalia <dy93_@hotmail.com>",
+  "author": "Rod Galvao <ro@rogalvao.com> et al.",
   "dependencies": {
     "shelljs": "^0.7.6"
   }
