@@ -1,11 +1,15 @@
 # GitBook PlantUml Plugin
 
 * inspired by [romanlytkin/gitbook-plantuml](https://github.com/romanlytkin/gitbook-plantuml)
+* forked from [dy93/gitbook-plugin-plantuml-cloud](https://github.com/dy93/gitbook-plugin-plantuml-cloud)
 
 The plugin now supports two APIs for generating PlantUML diagrams:
 * [bitjourney/plantuml-service](https://github.com/bitjourney/plantuml-service)
 * [PlantUML Server](http://www.plantuml.com/plantuml/)
 
+Added new parameters: language and host's port
+* Added support for asciidoc.
+* Added support for plantuml running in another server's port
 
 ## Installation
 
@@ -35,6 +39,7 @@ The plugin now supports two APIs for generating PlantUML diagrams:
 | protocol | https or http | "https" |
 | path | URL Fragment which will be appended to the host part | "/svg/" |
 | blockRegex | Regular expression to select the diagramming text blocks. | ^```uml((.*\n)+?)?```$ |
+| language | Which language will be generated. Supports "asciidoc" | "markdown" |
 
 * If want to use the PlantUML Server API the following changes need to be made to the plugin configuration in your book.json:
 
