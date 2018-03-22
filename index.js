@@ -33,7 +33,8 @@ module.exports = {
 	hooks: {
 		"init": function () {
 			var output = this.output;
-			var config = this.config.values.pluginsConfig["plantuml-cloud"];
+			var config = this.config.values.pluginsConfig["plantuml-cloud-languages"];
+
 			if (config.umlPath != undefined) {
 				options.umlPath = config.umlPath;
 			}
@@ -58,9 +59,8 @@ module.exports = {
 			if (config.language != undefined) {
 				options.language = config.languague;
 			}
-			process.stdout.write("options.umlPath " + options.umlPath);
+
 			var umlPath = output.resolve(options.umlPath);
-			process.stdout.write("umlPath after " + umlPath);
 			mkdir('-p', umlPath);
 		},
 		"page:before": function (page) {
