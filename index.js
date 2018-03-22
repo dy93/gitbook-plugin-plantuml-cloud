@@ -12,9 +12,11 @@ var options = {
 	"umlPath": "assets/images/uml",
 	"type": "plantuml-service",
 	"host": "plantuml-service.herokuapp.com",
+	"port": "80",
 	"protocol": "https",
 	"path": "/svg/",
-	"blockRegex": "^```uml((.*[\r\n])+?)?```$"
+	"blockRegex": "^```uml((.*[\r\n])+?)?```$",
+	"language": "markdown"
 }
 
 require('shelljs/global');
@@ -41,6 +43,9 @@ module.exports = {
 			if (config.host != undefined) {
 				options.host = config.host;
 			}
+			if (config.port != undefined) {
+				options.port = config.port;
+			}
 			if (config.protocol != undefined) {
 				options.protocol = config.protocol;
 			}
@@ -49,6 +54,9 @@ module.exports = {
 			}
 			if (config.blockRegex != undefined) {
 				options.blockRegex = config.blockRegex;
+			}
+			if (config.language != undefined) {
+				options.language = config.languague;
 			}
 			var umlPath = output.resolve(options.umlPath);
 			mkdir('-p', umlPath);
@@ -73,7 +81,13 @@ module.exports = {
 			}
 
 			Promise.all([umls.map(uml => {
-				var svgTag = '![](/' + uml.svgPath + ')';
+				var svgTag = '';
+				if (options.language = 'markdown') {
+					svgTag = '![](/' + uml.svgPath + ')';
+				}
+				if (options.language = 'asciidoc') {
+					svgTag = 'image::' + uml.svgPath + '[]';
+				}
 				page.content = content = content.replace(uml.rawBlock, svgTag);
 
 				return output.hasFile(uml.svgPath).then(exists => {
@@ -92,7 +106,8 @@ module.exports = {
 
 							client.request({
 								host: options.host,
-								path: path
+								path: path,
+								port: options.port
 							}, (res) => {
 								var ws = fs.createWriteStream(output.resolve(uml.svgPath));
 								res.pipe(ws);
