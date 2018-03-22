@@ -17,7 +17,7 @@ Added new parameters: language and host's port
 
 ```js
 {
-  "plugins": ["plantuml-cloud"]
+  "plugins": ["plantuml-cloud-languages"]
 }
 ```
 
@@ -48,7 +48,7 @@ Added new parameters: language and host's port
 {
   "plugins": ["plantuml-cloud"],
   "pluginsConfig": {
-    "plantuml-cloud": {
+    "plantuml-cloud-languages": {
       "protocol": "http",
       "type": "plantuml-server",
       "host": "www.plantuml.com",
