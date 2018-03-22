@@ -1,5 +1,5 @@
 {
-  "name": "gitbook-plantuml-cloud-languages",
+  "name": "gitbook-plugin-plantuml-cloud-languages",
   "description": "GitBook-PlantUML integration with support for Asciidoc",
   "main": "index.js",
   "version": "1.0.0",
