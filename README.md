@@ -1,4 +1,14 @@
-# GitBook PlantUml Plugin
+# GitBook PlantUml Plugin with Cloud and Language Support
+
+This is a plugin for Gitbook to support PlantUML diagrams inside Markdown/Asciidoc documents.
+It doesn't need a local java running process. It does a call to a PlantUML server to render the graph.
+
+Added new parameters: language, host's port and output format
+* Added support for asciidoc.
+* Added support for plantuml running in another server's port
+* Added support for other output format (generated file extension)
+
+Package published at [](https://www.npmjs.com/package/gitbook-plugin-plantuml-cloud-languages)
 
 * inspired by [romanlytkin/gitbook-plantuml](https://github.com/romanlytkin/gitbook-plantuml)
 * forked from [dy93/gitbook-plugin-plantuml-cloud](https://github.com/dy93/gitbook-plugin-plantuml-cloud)
@@ -6,11 +16,6 @@
 The plugin now supports two APIs for generating PlantUML diagrams:
 * [bitjourney/plantuml-service](https://github.com/bitjourney/plantuml-service)
 * [PlantUML Server](http://www.plantuml.com/plantuml/)
-
-Added new parameters: language, host's port and output format
-* Added support for asciidoc.
-* Added support for plantuml running in another server's port
-* Added support for other output format (generated file extension)
 
 ## Installation
 
@@ -54,7 +59,7 @@ Added new parameters: language, host's port and output format
       "protocol": "http",
       "type": "plantuml-server",
       "host": "www.plantuml.com",
-      "port": "8080",
+      "port": "80",
       "path": "/plantuml/svg/",
       "language": "asciidoc",
       "format": "svg"
