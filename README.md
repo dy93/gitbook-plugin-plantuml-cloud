@@ -8,7 +8,7 @@ Added new parameters: language, host's port and output format
 * Added support for plantuml running in another server's port
 * Added support for other output format (generated file extension)
 
-Package published at [](https://www.npmjs.com/package/gitbook-plugin-plantuml-cloud-languages)
+Package published at [gitbook-plugin-plantuml-cloud-languages](https://www.npmjs.com/package/gitbook-plugin-plantuml-cloud-languages)
 
 * inspired by [romanlytkin/gitbook-plantuml](https://github.com/romanlytkin/gitbook-plantuml)
 * forked from [dy93/gitbook-plugin-plantuml-cloud](https://github.com/dy93/gitbook-plugin-plantuml-cloud)
@@ -17,7 +17,11 @@ The plugin now supports two APIs for generating PlantUML diagrams:
 * [bitjourney/plantuml-service](https://github.com/bitjourney/plantuml-service)
 * [PlantUML Server](http://www.plantuml.com/plantuml/)
 
-## Installation
+## NPM Installation
+
+```$ npm install gitbook-plugin-plantuml-cloud-languages```
+
+## Gitbook Installation
 
 * Add the plugin to your book.json
 
