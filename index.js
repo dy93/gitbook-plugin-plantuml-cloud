@@ -16,7 +16,8 @@ var options = {
 	"protocol": "https",
 	"path": "/svg/",
 	"blockRegex": "^```uml((.*[\r\n])+?)?```$",
-	"language": "markdown"
+	"language": "markdown",
+	"format": "svg"
 }
 
 require('shelljs/global');
@@ -59,6 +60,9 @@ module.exports = {
 			if (config.language != undefined) {
 				options.language = config.languague;
 			}
+			if (config.format != undefined) {
+				options.format = config.format;
+			}
 
 			var umlPath = output.resolve(options.umlPath);
 			mkdir('-p', umlPath);
@@ -74,25 +78,25 @@ module.exports = {
 				var rawBlock = match[0];
 				var umlBlock = match[1];
 				var md5 = crypto.createHash('md5').update(umlBlock).digest('hex');
-				var svgPath = path.join(options.umlPath, md5 + '.svg');
+				var renderPath = path.join(options.umlPath, md5 + '.' + options.format);
 				umls.push({
 					rawBlock: match[0],
 					umlBlock: match[1],
-					svgPath: svgPath
+					renderPath: renderPath
 				});
 			}
 
 			Promise.all([umls.map(uml => {
-				var svgTag = '';
+				var renderTag = '';
 				if (options.language = 'markdown') {
-					svgTag = '![](/' + uml.svgPath + ')';
+					renderTag = '![](/' + uml.renderPath + ')';
 				}
 				if (options.language = 'asciidoc') {
-					svgTag = 'image::' + uml.svgPath + '[]';
+					renderTag = 'image::' + uml.renderPath + '[]';
 				}
-				page.content = content = content.replace(uml.rawBlock, svgTag);
+				page.content = content = content.replace(uml.rawBlock, renderTag);
 
-				return output.hasFile(uml.svgPath).then(exists => {
+				return output.hasFile(uml.renderPath).then(exists => {
 					if (!exists) {
 						return new Promise((resolve, reject) => {
 
@@ -111,7 +115,7 @@ module.exports = {
 								path: path,
 								port: options.port
 							}, (res) => {
-								var ws = fs.createWriteStream(output.resolve(uml.svgPath));
+								var ws = fs.createWriteStream(output.resolve(uml.renderPath));
 								res.pipe(ws);
 								res.on('end', resolve);
 							}).end();
