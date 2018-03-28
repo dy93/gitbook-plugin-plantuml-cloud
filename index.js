@@ -77,6 +77,8 @@ module.exports = {
 			while ((match = re.exec(content))) {
 				var rawBlock = match[0];
 				var umlBlock = match[1];
+				//console.log("umlBlock: " + umlBlock);
+				//console.log("rawBlock: " + rawBlock);
 				var md5 = crypto.createHash('md5').update(umlBlock).digest('hex');
 				var renderPath = path.join(options.umlPath, md5 + '.' + options.format);
 				umls.push({
@@ -95,6 +97,7 @@ module.exports = {
 					renderTag = 'image::' + uml.renderPath + '[]';
 				}
 				page.content = content = content.replace(uml.rawBlock, renderTag);
+				//console.log("renderTag: " + renderTag);
 
 				return output.hasFile(uml.renderPath).then(exists => {
 					if (!exists) {
@@ -110,15 +113,22 @@ module.exports = {
 								path = options.path + plantumlServerEscape(uml.umlBlock);
 							}
 
-							client.request({
+							console.log("Request URL: " + options.host + ":" + options.port + path)
+							const req = client.request({
 								host: options.host,
 								path: path,
 								port: options.port
-							}, (res) => {
+							}, (response) => {
+								console.log("There is a response");
 								var ws = fs.createWriteStream(output.resolve(uml.renderPath));
-								res.pipe(ws);
-								res.on('end', resolve);
-							}).end();
+								console.log(res);
+								console.log(ws);
+								response.pipe(ws);
+								response.on('end', resolve);
+								response.on('error', function(exception) { Console.log("Error here"); });
+								if(response.statusCode == '200') { callback(null, response); }
+								else { res.send('Something else'); }
+							}).on('error', function(e) { console.error(`Problem with request: ${e.message}`); }).end();
 						});
 					}
 				})
