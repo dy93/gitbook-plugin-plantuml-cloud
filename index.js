@@ -77,8 +77,6 @@ module.exports = {
 			while ((match = re.exec(content))) {
 				var rawBlock = match[0];
 				var umlBlock = match[1];
-				//console.log("umlBlock: " + umlBlock);
-				//console.log("rawBlock: " + rawBlock);
 				var md5 = crypto.createHash('md5').update(umlBlock).digest('hex');
 				var renderPath = path.join(options.umlPath, md5 + '.' + options.format);
 				umls.push({
@@ -97,17 +95,14 @@ module.exports = {
 					renderTag = 'image::' + uml.renderPath + '[]';
 				}
 				page.content = content = content.replace(uml.rawBlock, renderTag);
-				//console.log("renderTag: " + renderTag);
 
 				return output.hasFile(uml.renderPath).then(exists => {
 					if (!exists) {
 						return new Promise((resolve, reject) => {
 
 							var client = http;
-							http.globalAgent.keepAlive=true
 							if (options.protocol == "https") {
 								client = https;
-								https.globalAgent.keepAlive=true
 							}
 
 							var path = options.path + qs.escape(uml.umlBlock);
@@ -115,30 +110,15 @@ module.exports = {
 								path = options.path + plantumlServerEscape(uml.umlBlock);
 							}
 
-							console.log("Request URL: " + options.host + ":" + options.port + path)
 							client.request({
 								host: options.host,
 								path: path,
-								port: options.port,
-								headers: { 'Connection': 'keep-alive' }
-							}, (response) => {
-								//console.log("There is data");
+								port: options.port
+							}, (res) => {
 								var ws = fs.createWriteStream(output.resolve(uml.renderPath));
-								console.log(res);
-								console.log(ws);
-								response.pipe(ws);
-								response.on('response', function(response) {
-									console.log("Response's status code: " + response.statusCode);
-									console.log("Response's headers: " + response.headers['content-type']);
-								});
-								response.on('end', resolve);
-								response.on('error', function(exception) { Console.log("Error here"); });
-								if(response.statusCode == '200') { callback(null, response); }
-								else { res.send('Something else'); }
-							}).setTimeout(5000, function() {
-								console.log("Timeout!");
-							    this.abort();
-							}).on('error', function(e) { console.error(`Problem with request: ${e.message}`); }).end();
+								res.pipe(ws);
+								res.on('end', resolve);
+							}).end();
 						});
 					}
 				})
